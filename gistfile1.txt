@@ -1,0 +1,34 @@
+#define trigPin 8
+#define echoPin 7
+#define BUZ 3
+#define FAN 4
+long duration, distance;
+
+void setup() {
+  Serial.begin (9600);
+  pinMode (trigPin, OUTPUT);
+  pinMode (echoPin, INPUT);
+  pinMode (FAN, OUTPUT);
+  pinMode (BUZ, OUTPUT);
+  Serial.println("Radar Ready");
+  delay(500); 
+}
+
+void loop() {
+digitalWrite(trigPin, HIGH);
+delay(10);
+digitalWrite(trigPin, LOW);
+
+duration = pulseIn(echoPin, HIGH);
+
+distance = (duration/2) / 29.1;
+
+if (distance < 10) {
+  digitalWrite (BUZ, HIGH);
+  digitalWrite (FAN, LOW); 
+  Serial.println("cm"); }
+  else {
+  digitalWrite (BUZ, LOW);
+  digitalWrite (FAN, HIGH);
+  }
+}
